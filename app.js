@@ -10,15 +10,29 @@ const ExpressError = require("./utils/ExpressError.js");
 const { listingSchema, reviewSchema } = require("./schema.js");
 const Review = require("./models/review.js");
 
-const MONGO_URL ="mongodb://127.0.0.1:27017/wanderlust";
-main().then(()=>{
-    console.log("connecte to db");
-})
-.catch((err)=>{
+// const MONGO_URL ="mongodb://127.0.0.1:27017/wanderlust";
+// main().then(()=>{
+//     console.log("connecte to db");
+// })
+// .catch((err)=>{
+//     console.log(err);
+// });
+// async function main(){
+//     await mongoose.connect(MONGO_URL);
+// }
+
+const MONGO_URL = process.env.ATLASDB_URL || "mongodb://127.0.0.1:27017/wanderlust";
+
+main()
+  .then(() => {
+    console.log("connected to db");
+  })
+  .catch((err) => {
     console.log(err);
-});
-async function main(){
-    await mongoose.connect(MONGO_URL);
+  });
+
+async function main() {
+  await mongoose.connect(MONGO_URL);
 }
 
 app.use(express.urlencoded({ extended: true }));
